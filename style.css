@@ -337,3 +337,68 @@ body {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+/* Units Dropdown Menu Styles */
+.units-container {
+  position: relative;
+}
+
+.units-dropdown-menu {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background-color: var(--bg-card);
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  width: 220px;
+  z-index: 100;
+  margin-top: 10px;
+}
+
+.units-dropdown-menu h4 {
+  margin-bottom: 15px;
+  font-size: 0.95rem;
+}
+
+.unit-group {
+  margin-bottom: 15px;
+}
+
+.unit-group.last-group {
+  margin-bottom: 0;
+}
+
+.unit-label {
+  font-size: 0.8rem;
+  color: var(--text-gray);
+  margin-bottom: 8px;
+}
+
+.radio-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+/* Footer Attribution Styles */
+.attribution {
+  font-size: 0.85rem;
+  text-align: center;
+  padding: 20px 0;
+  color: var(--text-gray);
+}
+
+.attribution a {
+  color: var(--primary-accent);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.attribution a:hover {
+  text-decoration: underline;
+}

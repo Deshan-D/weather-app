@@ -4,17 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
-  
   <title>Frontend Mentor | Weather app</title>
-
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-  <style>
-    .attribution { font-size: 0.8rem; text-align: center; padding: 20px 0; color: #94A3B8; }
-    .attribution a { color: #5C65E5; text-decoration: none; font-weight: bold;}
-    .attribution a:hover { text-decoration: underline; }
-  </style>
 </head>
 <body>
 
@@ -24,35 +16,36 @@
       <span class="logo-text">Weather Now</span>
     </div>
     
-    <div class="units-container" style="position: relative;">
+    <!-- Units Dropdown Container -->
+    <div class="units-container">
       <button id="units-btn">⚙️ Units <span>⌄</span></button>
       
-      <div class="units-dropdown-menu" id="units-menu" style="display: none; position: absolute; right: 0; top: 100%; background: #151C2C; padding: 15px; border-radius: 10px; border: 1px solid #2e3c54; width: 200px; z-index: 100;">
-        <h4 style="margin-bottom: 15px; font-size: 0.9rem;">Switch to Imperial</h4>
+      <!-- Dropdown Menu -->
+      <div class="units-dropdown-menu" id="units-menu">
+        <h4>Switch to Imperial</h4>
         
-        <div class="unit-group" style="margin-bottom: 15px;">
-          <p style="font-size: 0.8rem; color: #94A3B8; margin-bottom: 5px;">Temperature</p>
-          <label style="display: block; font-size: 0.9rem; margin-bottom: 5px;"><input type="radio" name="temp" value="celsius" checked> Celsius (°C)</label>
-          <label style="display: block; font-size: 0.9rem;"><input type="radio" name="temp" value="fahrenheit"> Fahrenheit (°F)</label>
-        </div>
-
-        <div class="unit-group" style="margin-bottom: 15px;">
-          <p style="font-size: 0.8rem; color: #94A3B8; margin-bottom: 5px;">Wind Speed</p>
-          <label style="display: block; font-size: 0.9rem; margin-bottom: 5px;"><input type="radio" name="wind" value="kmh" checked> km/h</label>
-          <label style="display: block; font-size: 0.9rem;"><input type="radio" name="wind" value="mph"> mph</label>
+        <div class="unit-group">
+          <p class="unit-label">Temperature</p>
+          <label class="radio-label"><input type="radio" name="temp" value="celsius" checked> Celsius (°C)</label>
+          <label class="radio-label"><input type="radio" name="temp" value="fahrenheit"> Fahrenheit (°F)</label>
         </div>
 
         <div class="unit-group">
-          <p style="font-size: 0.8rem; color: #94A3B8; margin-bottom: 5px;">Precipitation</p>
-          <label style="display: block; font-size: 0.9rem; margin-bottom: 5px;"><input type="radio" name="precip" value="mm" checked> Millimeters (mm)</label>
-          <label style="display: block; font-size: 0.9rem;"><input type="radio" name="precip" value="in"> Inches (in)</label>
+          <p class="unit-label">Wind Speed</p>
+          <label class="radio-label"><input type="radio" name="wind" value="kmh" checked> km/h</label>
+          <label class="radio-label"><input type="radio" name="wind" value="mph"> mph</label>
+        </div>
+
+        <div class="unit-group last-group">
+          <p class="unit-label">Precipitation</p>
+          <label class="radio-label"><input type="radio" name="precip" value="mm" checked> Millimeters (mm)</label>
+          <label class="radio-label"><input type="radio" name="precip" value="in"> Inches (in)</label>
         </div>
       </div>
     </div>
   </nav>
 
   <div class="app-container">
-    
     <header class="header-section">
       <h1>How's the sky looking today?</h1>
       <div class="search-wrapper">
@@ -65,9 +58,7 @@
     </header>
 
     <main class="weather-dashboard">
-      
       <div class="left-column">
-        
         <section class="current-weather-card">
           <div class="location-details">
             <h2 id="city-name">Berlin, Germany</h2>
@@ -80,39 +71,21 @@
         </section>
 
         <section class="metrics-grid">
-          <div class="metric-card">
-            <span class="metric-label">Feels like</span>
-            <span id="feels-like" class="metric-value">18°</span>
-          </div>
-          <div class="metric-card">
-            <span class="metric-label">Humidity</span>
-            <span id="humidity" class="metric-value">46%</span>
-          </div>
-          <div class="metric-card">
-            <span class="metric-label">Wind</span>
-            <span id="wind-speed" class="metric-value">14 km/h</span>
-          </div>
-          <div class="metric-card">
-            <span class="metric-label">Precipitation</span>
-            <span id="precipitation" class="metric-value">0 mm</span>
-          </div>
+          <div class="metric-card"><span class="metric-label">Feels like</span><span id="feels-like" class="metric-value">18°</span></div>
+          <div class="metric-card"><span class="metric-label">Humidity</span><span id="humidity" class="metric-value">46%</span></div>
+          <div class="metric-card"><span class="metric-label">Wind</span><span id="wind-speed" class="metric-value">14 km/h</span></div>
+          <div class="metric-card"><span class="metric-label">Precipitation</span><span id="precipitation" class="metric-value">0 mm</span></div>
         </section>
 
         <section class="daily-section">
           <h3 class="section-title">Daily forecast</h3>
           <div class="daily-grid" id="daily-container">
-
             <div class="daily-card">
-              <span class="day">Tue</span>
-              <span class="icon">🌧️</span>
-              <div class="high-low">
-                <span class="high">20°</span>
-                <span class="low">14°</span>
-              </div>
+              <span class="day">Tue</span><span class="icon">🌧️</span>
+              <div class="high-low"><span class="high">20°</span><span class="low">14°</span></div>
             </div>
           </div>
         </section>
-
       </div>
 
       <div class="right-column">
@@ -122,20 +95,15 @@
             <button class="day-selector">Tuesday <span>⌄</span></button>
           </div>
           <div class="hourly-list" id="hourly-container">
-             
-            <div class="hourly-item">
-              <span class="time">☁️ 3 PM</span>
-              <span class="temp">20°</span>
-            </div>
+            <div class="hourly-item"><span class="time">☁️ 3 PM</span><span class="temp">20°</span></div>
           </div>
         </section>
       </div>
-
     </main>
   </div>
 
   <footer class="attribution">
-    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
+    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank" rel="noopener">Frontend Mentor</a>. 
     Coded by <a href="#">Deshan</a>.
   </footer>
 
