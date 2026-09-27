@@ -1,3 +1,4 @@
+
 const unitsBtn = document.getElementById('units-btn');
 const unitsMenu = document.getElementById('units-menu');
 
@@ -14,6 +15,17 @@ document.addEventListener('click', (event) => {
     unitsMenu.style.display = 'none';
   }
 });
+
+function getWeatherIcon(code) {
+  if (code === 0) return '☀️';
+  if (code >= 1 && code <= 3) return '⛅';
+  if (code >= 45 && code <= 48) return '🌫️';
+  if (code >= 51 && code <= 67) return '🌧️';
+  if (code >= 71 && code <= 77) return '❄️';
+  if (code >= 80 && code <= 82) return '🌦️';
+  if (code >= 95) return '⛈️';
+  return '☁️';
+}
 
 const searchBtn = document.getElementById('search-btn');
 const searchInput = document.getElementById('search-input');
@@ -33,20 +45,62 @@ async function getWeatherData(city) {
     const lon = location.longitude;
     
     document.getElementById('city-name').innerText = `${location.name}, ${location.country}`;
-
     const options = { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' };
     document.getElementById('current-date').innerText = new Date().toLocaleDateString('en-US', options);
 
-    const weatherResponse = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,wind_speed_10m&timezone=auto`);
+    const weatherResponse = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,wind_speed_10m,weather_code&hourly=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=auto`);
     const weatherData = await weatherResponse.json();
 
     const current = weatherData.current;
-
     document.getElementById('current-temp').innerText = `${Math.round(current.temperature_2m)}°`;
     document.getElementById('feels-like').innerText = `${Math.round(current.apparent_temperature)}°`;
     document.getElementById('humidity').innerText = `${current.relative_humidity_2m}%`;
     document.getElementById('wind-speed').innerText = `${current.wind_speed_10m} km/h`;
     document.getElementById('precipitation').innerText = `${current.precipitation} mm`;
+    
+    document.querySelector('.main-icon').innerText = getWeatherIcon(current.weather_code);
+
+    const dailyContainer = document.getElementById('daily-container');
+    dailyContainer.innerHTML = '';
+    
+    for(let i = 0; i < 7; i++) {
+      const date = new Date(weatherData.daily.time[i]);
+      const dayName = date.toLocaleDateString('en-US', { weekday: 'short' });
+      const maxTemp = Math.round(weatherData.daily.temperature_2m_max[i]);
+      const minTemp = Math.round(weatherData.daily.temperature_2m_min[i]);
+      const icon = getWeatherIcon(weatherData.daily.weather_code[i]);
+
+      dailyContainer.innerHTML += `
+        <div class="daily-card">
+          <span class="day">${dayName}</span>
+          <span class="icon">${icon}</span>
+          <div class="high-low">
+            <span class="high">${maxTemp}°</span>
+            <span class="low">${minTemp}°</span>
+          </div>
+        </div>
+      `;
+    }
+
+    const hourlyContainer = document.getElementById('hourly-container');
+    hourlyContainer.innerHTML = '';
+    const currentHourIndex = new Date().getHours(); 
+    
+    for(let i = 0; i < 8; i++) {
+      const index = currentHourIndex + i;
+      const timeString = weatherData.hourly.time[index];
+      const date = new Date(timeString);
+      const timeFormatted = date.toLocaleTimeString('en-US', { hour: 'numeric', hour12: true });
+      const temp = Math.round(weatherData.hourly.temperature_2m[index]);
+      const icon = getWeatherIcon(weatherData.hourly.weather_code[index]);
+
+      hourlyContainer.innerHTML += `
+        <div class="hourly-item">
+          <span class="time">${icon} ${timeFormatted}</span>
+          <span class="temp">${temp}°</span>
+        </div>
+      `;
+    }
 
   } catch (error) {
     console.error("Error fetching data:", error);
@@ -56,16 +110,16 @@ async function getWeatherData(city) {
 
 searchBtn.addEventListener('click', () => {
   const city = searchInput.value.trim();
-  if (city) {
-    getWeatherData(city);
-  }
+  if (city) getWeatherData(city);
 });
 
 searchInput.addEventListener('keypress', (event) => {
   if (event.key === 'Enter') {
     const city = searchInput.value.trim();
-    if (city) {
-      getWeatherData(city);
-    }
+    if (city) getWeatherData(city);
   }
 });
+
+window.onload = () => {
+  getWeatherData("London");
+};
