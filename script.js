@@ -34,12 +34,19 @@ async function getWeatherData(city) {
     
     document.getElementById('city-name').innerText = `${location.name}, ${location.country}`;
 
-    const weatherResponse = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`);
+    const options = { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' };
+    document.getElementById('current-date').innerText = new Date().toLocaleDateString('en-US', options);
+
+    const weatherResponse = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,wind_speed_10m&timezone=auto`);
     const weatherData = await weatherResponse.json();
 
-    const currentTemp = weatherData.current_weather.temperature;
+    const current = weatherData.current;
 
-    document.getElementById('current-temp').innerText = `${Math.round(currentTemp)}°`;
+    document.getElementById('current-temp').innerText = `${Math.round(current.temperature_2m)}°`;
+    document.getElementById('feels-like').innerText = `${Math.round(current.apparent_temperature)}°`;
+    document.getElementById('humidity').innerText = `${current.relative_humidity_2m}%`;
+    document.getElementById('wind-speed').innerText = `${current.wind_speed_10m} km/h`;
+    document.getElementById('precipitation').innerText = `${current.precipitation} mm`;
 
   } catch (error) {
     console.error("Error fetching data:", error);
@@ -51,8 +58,6 @@ searchBtn.addEventListener('click', () => {
   const city = searchInput.value.trim();
   if (city) {
     getWeatherData(city);
-  } else {
-    alert("කරුණාකර නගරයක නමක් ඇතුළත් කරන්න!");
   }
 });
 
