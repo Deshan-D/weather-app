@@ -402,3 +402,39 @@ body {
 .attribution a:hover {
   text-decoration: underline;
 }
+
+
+.day-selector-dropdown {
+  background-color: var(--bg-card-hover);
+  color: var(--text-white);
+  border: 1px solid var(--border-color);
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  outline: none;
+  font-size: 0.9rem;
+  appearance: auto;
+}
+
+.day-selector-dropdown:hover {
+  border-color: var(--primary-accent);
+}
+
+.day-selector-dropdown option {
+  background-color: var(--bg-card);
+  color: var(--text-white);
+}
+
+.hourly-list {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+.hourly-list::-webkit-scrollbar {
+  width: 6px;
+}
+.hourly-list::-webkit-scrollbar-thumb {
+  background-color: var(--border-color);
+  border-radius: 10px;
+}
